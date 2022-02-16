@@ -9,7 +9,6 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(title: 'Flutter Demo', home: Home());
-  }
+  Widget build(BuildContext context) =>
+      const MaterialApp(title: 'Flutter Demo', home: Home());
 }
