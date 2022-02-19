@@ -1,4 +1,4 @@
-import 'package:apod_gallery/screens/home.dart';
+import 'package:apod_gallery/screens/pages_wrapper.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,5 +10,5 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-      const MaterialApp(title: 'Flutter Demo', home: Home());
+      const MaterialApp(title: 'Flutter Demo', home: Pages());
 }
