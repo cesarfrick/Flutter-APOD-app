@@ -29,39 +29,42 @@ class _HomeState extends State<Home> {
         title: const Text('Astronomy Picture of the Day Gallery'),
         backgroundColor: Colors.pink,
       ),
-      body: FutureBuilder(
-          future: _pictures,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final data = snapshot.data as Pictures;
-              final pictures = data.pictures;
+      body: SafeArea(
+        minimum: const EdgeInsets.only(top: 8.0),
+        child: FutureBuilder(
+            future: _pictures,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final data = snapshot.data as Pictures;
+                final pictures = data.pictures;
 
-              return GridView.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 10,
-                children: pictures
-                    .map((picture) => PictureCard(
-                          url: picture.mediaType == 'image'
-                              ? picture.url
-                              : picture.videoThumbnail,
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return PictureDetails(picture: picture);
-                            }));
-                          },
-                        ))
-                    .toList(),
+                return GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 8,
+                  mainAxisSpacing: 10,
+                  children: pictures
+                      .map((picture) => PictureCard(
+                            url: picture.mediaType == 'image'
+                                ? picture.url
+                                : picture.videoThumbnail,
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return PictureDetails(picture: picture);
+                              }));
+                            },
+                          ))
+                      .toList(),
+                );
+              } else if (snapshot.hasError) {
+                return Center(child: Text('${snapshot.error}'));
+              }
+
+              return const Center(
+                child: CircularProgressIndicator(),
               );
-            } else if (snapshot.hasError) {
-              return Center(child: Text('${snapshot.error}'));
-            }
-
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }),
+            }),
+      ),
     );
   }
 }
