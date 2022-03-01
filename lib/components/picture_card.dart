@@ -1,6 +1,8 @@
+import 'package:apod_gallery/provider/favorites_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PictureCard extends StatefulWidget {
+class PictureCard extends ConsumerStatefulWidget {
   final String url;
   final Function onTap;
 
@@ -14,13 +16,18 @@ class PictureCard extends StatefulWidget {
   _PictureCardState createState() => _PictureCardState();
 }
 
-class _PictureCardState extends State<PictureCard> {
+class _PictureCardState extends ConsumerState<PictureCard> {
   bool _isFavorite = false;
 
   void _toggleFavorite() {
+    final favorites = ref.read(favoritesProvider.notifier);
     setState(() {
       _isFavorite = !_isFavorite;
     });
+
+    _isFavorite
+        ? favorites.addFavorite(widget)
+        : favorites.removeFavorite(widget.url);
   }
 
   @override
