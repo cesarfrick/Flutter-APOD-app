@@ -16,7 +16,7 @@ class PictureDetails extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            children: <Widget>[
+            children: [
               Padding(
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: Media(mediaType: picture.mediaType, src: picture.url),
