@@ -26,7 +26,7 @@ class Favorites extends ConsumerWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
-                    Text('You haven\'t selected any favorite picture yet',
+                    Text("You haven't selected any favorite picture yet",
                         style: TextStyle(fontSize: 16, color: Colors.black54)),
                     Text(
                       '😢',
