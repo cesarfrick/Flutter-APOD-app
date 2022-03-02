@@ -1,5 +1,7 @@
 import 'package:apod_gallery/models/picture_data.dart';
+import 'package:flutter/foundation.dart';
 
+@immutable
 class Pictures {
   final List<PictureData> pictures;
 

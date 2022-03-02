@@ -1,16 +1,18 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 
+@immutable
 class PictureData {
-  String? hdurl;
-  String? copyright;
-  String date;
-  String summary;
-  String mediaType;
-  String title;
-  String url;
-  String videoThumbnail;
+  final String? hdurl;
+  final String? copyright;
+  final String date;
+  final String summary;
+  final String mediaType;
+  final String title;
+  final String url;
+  final String videoThumbnail;
 
-  PictureData({
+  const PictureData({
     this.hdurl,
     this.copyright,
     required this.date,
