@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 
-@immutable
 class PictureData {
   final String? hdurl;
   final String? copyright;
@@ -11,10 +9,12 @@ class PictureData {
   final String title;
   final String url;
   final String videoThumbnail;
+  bool isFavorite = false;
 
-  const PictureData({
+  PictureData({
     this.hdurl,
     this.copyright,
+    this.isFavorite = false,
     required this.date,
     required this.summary,
     required this.title,

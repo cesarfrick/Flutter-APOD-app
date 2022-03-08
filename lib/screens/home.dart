@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:apod_gallery/services/picture_service.dart';
 import 'package:apod_gallery/components/picture_card.dart';
 import 'package:apod_gallery/models/pictures.dart';
-import 'package:apod_gallery/screens/picture_details.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -28,6 +27,12 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: const Text('Astronomy Picture of the Day Gallery'),
         backgroundColor: Colors.pink,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: SafeArea(
         minimum: const EdgeInsets.only(top: 8.0),
@@ -44,15 +49,7 @@ class _HomeState extends State<Home> {
                   mainAxisSpacing: 10,
                   children: pictures
                       .map((picture) => PictureCard(
-                            url: picture.mediaType == 'image'
-                                ? picture.url
-                                : picture.videoThumbnail,
-                            onTap: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return PictureDetails(picture: picture);
-                              }));
-                            },
+                            picture: picture,
                           ))
                       .toList(),
                 );

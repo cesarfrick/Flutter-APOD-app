@@ -1,20 +1,20 @@
-import 'package:apod_gallery/components/picture_card.dart';
+import 'package:apod_gallery/models/picture_data.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FavoritesNotifier extends StateNotifier<List<PictureCard>> {
+class FavoritesNotifier extends StateNotifier<List<PictureData>> {
   FavoritesNotifier() : super([]);
 
-  void addFavorite(PictureCard picture) {
+  void addFavorite(PictureData picture) {
     state = [
       ...state,
       picture,
     ];
   }
 
-  void removeFavorite(String url) {
+  void removeFavorite(String title) {
     state = [
-      for (final card in state)
-        if (card.url != url) card
+      for (final PictureData card in state)
+        if (card.title != title) card
     ];
   }
 }
