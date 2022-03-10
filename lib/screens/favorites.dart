@@ -3,6 +3,7 @@ import 'dart:math' show pi;
 import 'package:apod_gallery/models/picture_data.dart';
 import 'package:apod_gallery/provider/favorites_notifier.dart';
 import 'package:apod_gallery/provider/favorites_provider.dart';
+import 'package:apod_gallery/screens/picture_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,38 +11,46 @@ class Favorites extends ConsumerWidget {
   const Favorites({Key? key}) : super(key: key);
 
   List<Widget> createTiles(
+    BuildContext context,
       {List<PictureData> cards = const [],
       required FavoritesNotifier notifier}) {
     return [
       for (final card in cards)
         Dismissible(
           key: Key(card.url),
-          child: Card(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                  child: ListTile(
-                    iconColor: Colors.pinkAccent,
-                    leading: Container(
-                        alignment: Alignment.centerLeft,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              card.url,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return PictureDetails(picture: card);
+              }));
+            },
+            child: Card(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                    child: ListTile(
+                      iconColor: Colors.pinkAccent,
+                      leading: Container(
+                          alignment: Alignment.centerLeft,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(
+                                card.url,
+                              ),
+                              fit: BoxFit.cover,
                             ),
-                            fit: BoxFit.cover,
-                          ),
-                        )),
-                    title: Text(card.title),
-                    subtitle: Text('Taken on ${card.date}'),
-                    trailing: const Icon(
-                      Icons.favorite_rounded,
+                          )),
+                      title: Text(card.title),
+                      subtitle: Text('Taken on ${card.date}'),
+                      trailing: const Icon(
+                        Icons.favorite_rounded,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           background: Container(
@@ -88,7 +97,8 @@ class Favorites extends ConsumerWidget {
         ),
         body: _favorites.isNotEmpty
             ? ListView(
-                children: createTiles(cards: _favorites, notifier: _notifier),
+                children: createTiles(context,
+                    cards: _favorites, notifier: _notifier),
               )
             : Center(
                 child: Column(
