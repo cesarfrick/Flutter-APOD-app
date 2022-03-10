@@ -12,6 +12,7 @@ class PictureDetails extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(picture.title),
+        backgroundColor: Colors.pinkAccent,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
