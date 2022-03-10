@@ -28,40 +28,76 @@ class _HomeState extends ConsumerState<Home> {
         title: const Text('Astronomy Picture of the Day'),
         backgroundColor: Colors.pink,
       ),
-      body: _pictures.loadState == LoadingState.isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : CustomScrollView(slivers: <Widget>[
-              SliverAppBar(
-                actions: const [
-                  Icon(Icons.search),
-                ],
-                backgroundColor: Colors.pinkAccent,
-                flexibleSpace: TextField(
-                  style: const TextStyle(
-                    color: Colors.white,
-                    height: 2,
-                  ),
-                  onChanged: (text) {
-                    _pictures.filterPics(text);
-                  },
-                ),
-                pinned: true,
-              ),
-              SliverGrid(
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200.0,
-                  childAspectRatio: 1,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                ),
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) => PictureCard(
-                    picture: _pictures.pics[index],
-                  ),
-                  childCount: _pictures.pics.length,
-                ),
-              ),
-            ]),
+      body: _getBodyContent(_pictures),
     );
+  }
+
+  Widget _getBodyContent(PicsNotifier _pictures) {
+    if (_pictures.loadState == LoadingState.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (_pictures.loadState == LoadingState.isLoaded) {
+      return CustomScrollView(slivers: <Widget>[
+        SliverAppBar(
+          actions: const [
+            Icon(Icons.search),
+          ],
+          backgroundColor: Colors.pinkAccent,
+          flexibleSpace: TextField(
+            style: const TextStyle(
+              color: Colors.white,
+              height: 2,
+            ),
+            onChanged: (text) {
+              _pictures.filterPics(text);
+            },
+          ),
+          pinned: true,
+        ),
+        _getContentWidget(_pictures),
+      ]);
+    }
+
+    return Center(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Icon(Icons.error, size: 72, color: Colors.red),
+        Text(
+          _pictures.err,
+          style: const TextStyle(fontSize: 14),
+          textAlign: TextAlign.center,
+        )
+      ],
+    ));
+  }
+
+  Widget _getContentWidget(PicsNotifier _pictures) {
+    return _pictures.pics.isNotEmpty
+        ? SliverGrid(
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 200.0,
+              childAspectRatio: 1,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+            ),
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => PictureCard(
+                picture: _pictures.pics[index],
+              ),
+              childCount: _pictures.pics.length,
+            ),
+          )
+        : SliverFillRemaining(
+            child: Center(
+                child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text('No elements match your search',
+                  style: TextStyle(fontSize: 18, height: 4)),
+              Icon(Icons.image_not_supported, color: Colors.black38, size: 72),
+            ],
+          )));
   }
 }
