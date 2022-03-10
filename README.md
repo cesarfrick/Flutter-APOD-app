@@ -12,7 +12,7 @@ Once you have all set up, and cloned your project, you'll still need to request 
 Then, navigate to the `lib` folder, and create an `auth` folder, inside that folder, create a file called `secrets.dart`, and inside the file add this:
 
 ```dart
-const apiKey = 'YOUR_NASA_API';
+const apiKey = 'YOUR_NASA_API_KEY';
 ```
 
 Next, install the project dependencies by running `flutter pub get` in your terminal (you need to be in the project root directory)
