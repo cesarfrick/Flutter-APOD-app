@@ -3,12 +3,12 @@ import 'package:flutter/foundation.dart';
 
 @immutable
 class Pictures {
-  final Set<PictureData> pictures;
+  final List<PictureData> pictures;
 
   const Pictures(
     this.pictures,
   );
 
   factory Pictures.fromJson(List json) =>
-      Pictures(json.map((picture) => PictureData.fromJson(picture)).toSet());
+      Pictures(json.map((picture) => PictureData.fromJson(picture)).toList());
 }
