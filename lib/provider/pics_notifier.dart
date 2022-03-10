@@ -13,6 +13,7 @@ class PicsNotifier extends ChangeNotifier {
   List<PictureData> _origPics = [];
   List<PictureData> pics = [];
   LoadingState loadState = LoadingState.isLoading;
+  String err = '';
 
   PicsNotifier() {
     getDataFromService();
@@ -30,6 +31,8 @@ class PicsNotifier extends ChangeNotifier {
   }
 
   Future getDataFromService() async {
+    err = '';
+
     try {
       Pictures data = await PictureService().fetchPictureData();
       _origPics = data.pictures;
@@ -39,6 +42,9 @@ class PicsNotifier extends ChangeNotifier {
       notifyListeners();
     } on Exception catch (e) {
       loadState = LoadingState.loadingError;
+      err = e.toString();
+
+      notifyListeners();
 
       throw Exception(e);
     }
