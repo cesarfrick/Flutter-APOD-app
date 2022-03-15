@@ -1,5 +1,4 @@
 import 'dart:convert' show json;
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:apod_gallery/auth/secrets.dart';
 import 'package:apod_gallery/models/pictures.dart';
